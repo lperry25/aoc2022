@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
+export type Data = {
   result1: number;
   result2: number;
 }
@@ -10,7 +10,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   const elfsFood = req.body.split('\n\n').map((elfsFood: string) => {
-    return elfsFood.split('\n').reduce((a: string, b:string) => a + parseInt(b,10), 0)
+    return elfsFood.split('\n').reduce((a: number, b:string) => a + parseInt(b,10), 0)
   });
   const maxCalories = Math.max(...elfsFood);
 

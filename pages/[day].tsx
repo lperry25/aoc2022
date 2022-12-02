@@ -1,10 +1,11 @@
 import { GetServerSidePropsContext } from 'next';
 import { useEffect, useState } from 'react';
+import { Data } from './api/day1';
 
 export default function ProductPage({ day }: { day: string }) {
 
-  const [data, setData] = useState(null);
-  const [value, setValue] = useState(null);
+  const [data, setData] = useState<Data | null>(null);
+  const [value, setValue] = useState('');
   useEffect(() => {
     if (value){
       fetch(`/api/${day}`, {body: value, method: 'POST'}).then(resp => resp.json()).then(resp => setData(resp));
