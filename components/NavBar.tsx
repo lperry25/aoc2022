@@ -14,6 +14,7 @@ export function NavBar() {
           disabled ? 'bg-red-500 cursor-not-allowed' : 'bg-green-500 hover:bg-green-800'
         }`}
         href={!disabled ? `/day${num}` : asPath}
+        key={`day-link-${num}`}
       >
         {num}
       </Link>
@@ -24,12 +25,12 @@ export function NavBar() {
     <header className="bg-slate-900 text-white block h-[150px]">
       <div className="align-middle h-full pt-14 pl-4">
         <h1 className="text-3xl font-bold">
-          Laura's
+          Laura&apos;s
           <Link href="https://adventofcode.com/" className="hover:underline ml-2" target="_">
             Advent of Code 2022
           </Link>
         </h1>
-        <p>Select a day to answer that day's puzzle</p>
+        <p>Select a day to answer that day&apos;s puzzle</p>
       </div>
       <div className="text-right grid grid-cols-5 w-[170px] absolute right-4 top-4">{links}</div>
     </header>

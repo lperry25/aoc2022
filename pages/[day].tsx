@@ -12,7 +12,7 @@ export default function ProductPage({ day }: { day: string }) {
     if (value) {
       setData(null);
       setIsLoading(true);
-      console.log('calling', `/api/${day}`);
+
       fetch(`/api/${day}`, { body: value, method: 'POST' })
         .then(async resp => {
           if (resp.ok) return resp.json();
@@ -54,7 +54,7 @@ export default function ProductPage({ day }: { day: string }) {
     <div className="bg-slate-900 h-[100vh] text-[color:white] text-center flex flex-row">
       <div className="flex flex-col w-1/2 p-5">
         <label htmlFor="todays-input" className="flex w-full h-[50vh] flex-col text-left">
-          Enter today's input:
+          Enter today&apos;s input:
           <textarea
             id="todays-input"
             value={value}
@@ -67,7 +67,7 @@ export default function ProductPage({ day }: { day: string }) {
           target="_"
           className="text-left text-cyan-300 hover:underline mt-2"
         >
-          See today's problem
+          See today&apos;s problem
         </a>
       </div>
       <div className="flex flex-col p-5 text-left w-1/2">
