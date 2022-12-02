@@ -32,14 +32,11 @@ export default function ProductPage({ day }: { day: string }) {
     }
   }, [value, day]);
 
-  const today = new Date();
-  console.log(new Date('2022-12-25'), today.getDate());
-  //const showThisDay = today > new Date('2022-12-25') || today.getDate() >= ;
-
-  if (!showThisDate(parseInt(day.split('day')[1], 10))) {
+  const dayNum = parseInt(day.split('day')[1], 10);
+  if (!showThisDate(dayNum)) {
     return (
       <div className="bg-slate-900 h-[100vh] text-[color:white] text-center flex flex-row">
-        Day not released yet
+        <span className="text-red-500 ml-2 text-lg p-5"> Day not released yet</span>
       </div>
     );
   }
@@ -51,10 +48,10 @@ export default function ProductPage({ day }: { day: string }) {
       <span className="text-red-500 ml-2">{error}</span>
     );
   return (
-    <div className="bg-slate-900 h-[100vh] text-[color:white] text-center flex flex-row">
-      <div className="flex flex-col w-1/2 p-5">
+    <div className="bg-slate-900 h-[100vh] text-[color:white] text-center flex flex-col md:flex-row">
+      <div className="flex flex-col w-full md:w-1/2 p-5 pb-0">
         <label htmlFor="todays-input" className="flex w-full h-[50vh] flex-col text-left">
-          Enter today&apos;s input:
+          Enter input for day {dayNum}:
           <textarea
             id="todays-input"
             value={value}
@@ -70,9 +67,9 @@ export default function ProductPage({ day }: { day: string }) {
           See today&apos;s problem
         </a>
       </div>
-      <div className="flex flex-col p-5 text-left w-1/2">
-        <p className="mt-8">Part 1 Result: {resultOrError(data?.result1)}</p>
-        <p className="mt-8">Part 2 Result: {resultOrError(data?.result2)}</p>
+      <div className="flex flex-col pl-5 md:p-5 text-left w-1/2">
+        <p className="mt-2 md:mt-8">Part 1 Result: {resultOrError(data?.result1)}</p>
+        <p className="mt-2 md:mt-8">Part 2 Result: {resultOrError(data?.result2)}</p>
       </div>
     </div>
   );

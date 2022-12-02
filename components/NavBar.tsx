@@ -22,8 +22,8 @@ export function NavBar() {
   });
 
   return (
-    <header className="bg-slate-900 text-white block h-[150px]">
-      <div className="align-middle h-full pt-14 pl-4">
+    <header className="bg-slate-900 text-white block h-contents md:h-[150px]">
+      <div className="align-middle h-full md:pt-14 pl-4">
         <h1 className="text-3xl font-bold">
           Laura&apos;s
           <Link href="https://adventofcode.com/" className="hover:underline ml-2" target="_">
@@ -32,7 +32,9 @@ export function NavBar() {
         </h1>
         <p>Select a day to answer that day&apos;s puzzle</p>
       </div>
-      <div className="text-right grid grid-cols-5 w-[170px] absolute right-4 top-4">{links}</div>
+      <div className="grid grid-cols-5 w-[170px] m-auto md:text-right md:absolute md:right-4 md:top-4">
+        {links}
+      </div>
     </header>
   );
 }
