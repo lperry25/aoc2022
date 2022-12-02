@@ -22,9 +22,15 @@ export function NavBar() {
 
   return (
     <header className="bg-slate-900 text-white block h-[150px]">
-      <Link href="/" className="text-left">
-        Home
-      </Link>
+      <div className="align-middle h-full pt-14 pl-4">
+        <h1 className="text-3xl font-bold">
+          Laura's
+          <Link href="https://adventofcode.com/" className="hover:underline ml-2" target="_">
+            Advent of Code 2022
+          </Link>
+        </h1>
+        <p>Select a day to answer that day's puzzle</p>
+      </div>
       <div className="text-right grid grid-cols-5 w-[170px] absolute right-4 top-4">{links}</div>
     </header>
   );

@@ -12,12 +12,21 @@ export default function ProductPage({ day }: { day: string }) {
     if (value) {
       setData(null);
       setIsLoading(true);
+      console.log('calling', `/api/${day}`);
       fetch(`/api/${day}`, { body: value, method: 'POST' })
-        .then(resp => resp.json())
+        .then(async resp => {
+          if (resp.ok) return resp.json();
+          throw Object.assign(new Error(resp.statusText), { statusCode: resp.status });
+        })
         .then(resp => setData(resp))
-        .catch(e => {
-          console.log({ error: e });
-          setError(`Error processing the result. ${e}`);
+        .catch(({ message, statusCode }) => {
+          if (statusCode === 404) {
+            setError(
+              'This day has not been implemented yet. Either you are too early or I gave up :(',
+            );
+          } else {
+            setError(`Error processing the result. ${message}`);
+          }
         })
         .finally(() => setIsLoading(false));
     }
