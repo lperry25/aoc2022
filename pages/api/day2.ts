@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
   result1: number;
   result2: number;
-}
+};
 
 // A + X = Rock = 1
 // B + Y = Paper = 2
@@ -17,14 +17,14 @@ const ROCK = 1;
 const PAPER = 2;
 const SCISSORS = 3;
 
-// X > C 
+// X > C
 // Y > A
 // Z > B
 
 type Opponnent = 'A' | 'B' | 'C';
 type YourMove = 'X' | 'Y' | 'Z';
-function outcomePoints(opponent: Opponnent, yourMove: YourMove){
-  switch(yourMove){
+function outcomePoints(opponent: Opponnent, yourMove: YourMove) {
+  switch (yourMove) {
     case 'X':
       if (opponent === 'A') return DRAW + ROCK;
       if (opponent === 'B') return LOSS + ROCK;
@@ -45,8 +45,8 @@ function outcomePoints(opponent: Opponnent, yourMove: YourMove){
   }
 }
 
-function outcomePointsPart2(opponent: Opponnent, requiredOutcome: YourMove){
-  switch(requiredOutcome){
+function outcomePointsPart2(opponent: Opponnent, requiredOutcome: YourMove) {
+  switch (requiredOutcome) {
     case 'X': // LOSE
       if (opponent === 'A') return LOSS + SCISSORS; // they play rock
       if (opponent === 'B') return LOSS + ROCK; // they play paper
@@ -68,20 +68,20 @@ function outcomePointsPart2(opponent: Opponnent, requiredOutcome: YourMove){
 }
 
 type Move = `${Opponnent} ${YourMove}`;
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  const strategy = req.body.split('\n').reduce((sum: Data, moves: Move) => {
-    const splitMoves = moves.split(' ') as [Opponnent, YourMove];
-    if (!splitMoves[0] || !splitMoves[0]){
-      throw new Error('Error splitting the moves input');
-    }
-    return {
-      result1: sum.result1 + outcomePoints(splitMoves[0], splitMoves[1]),
-      result2: sum.result2 + outcomePointsPart2(splitMoves[0], splitMoves[1]),
-    };
-  }, {result1: 0, result2: 0});
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const strategy = req.body.split('\n').reduce(
+    (sum: Data, moves: Move) => {
+      const splitMoves = moves.split(' ') as [Opponnent, YourMove];
+      if (!splitMoves[0] || !splitMoves[0]) {
+        throw new Error('Error splitting the moves input');
+      }
+      return {
+        result1: sum.result1 + outcomePoints(splitMoves[0], splitMoves[1]),
+        result2: sum.result2 + outcomePointsPart2(splitMoves[0], splitMoves[1]),
+      };
+    },
+    { result1: 0, result2: 0 },
+  );
 
   res.status(200).json(strategy);
 }
