@@ -17,17 +17,6 @@ function getItemValue(letter: string) {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  console.log(
-    getItemValue('a'),
-    getItemValue('b'),
-    getItemValue('c'),
-    getItemValue('z'),
-    getItemValue('A'),
-    getItemValue('B'),
-    getItemValue('C'),
-    getItemValue('D'),
-    getItemValue('Z'),
-  );
   const rucksacks = req.body.split('\n');
   const result1 = rucksacks.reduce((sum: number, rucksack: string) => {
     const middle = Math.floor(rucksack.length / 2);
@@ -43,25 +32,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }, 0);
   let result2 = 0;
   const badges = [];
-  console.log(rucksacks.length);
   for (let i = 0; i < rucksacks.length - 2; i += 3) {
-    console.log(i);
     const currentRucksack = rucksacks[i].split('');
     const partnerRucksack1 = rucksacks[i + 1];
-    const partnerRucksack2 = rucksacks[i + 1];
-    console.log(rucksacks[i], partnerRucksack1, partnerRucksack2);
+    const partnerRucksack2 = rucksacks[i + 2];
 
     const badge = currentRucksack.find(
       (item: string) => partnerRucksack1.includes(item) && partnerRucksack2.includes(item),
     );
-    console.log({ badge }, getItemValue(badge), result2);
     badges.push(badge);
     result2 = result2 + getItemValue(badge);
   }
 
-  const badgeSum = badges.reduce((a, b) => a + getItemValue(b), 0);
-  console.log({ badges, badgeSum }, badges.length);
-
-  console.log({ result1, result2 });
   return res.status(200).json({ result1, result2 });
 }
