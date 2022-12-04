@@ -24,23 +24,36 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     const elf2 = elfs[1].split('-');
 
     // find which elfs section is smaller to start with
-    console.log({ elf1, elf2 });
     const elf1Min = parseInt(elf1[0], 10);
     const elf1Max = parseInt(elf1[1], 10);
     const elf2Min = parseInt(elf2[0], 10);
     const elf2Max = parseInt(elf2[1], 10);
     if (elf1Min <= elf2Min && elf1Max >= elf2Max) {
-      console.log({ elf1Min, elf1Max, elf2Min, elf2Max }, true);
       return true;
     }
     if (elf2Min <= elf1Min && elf2Max >= elf1Max) {
-      console.log({ elf1Min, elf1Max, elf2Min, elf2Max }, true);
       return true;
     }
-    console.log({ elf1Min, elf1Max, elf2Min, elf2Max }, false);
     return false;
   }).length;
-  console.log({ result1 });
 
-  return res.status(200).json({ result1: result1, result2: 0 });
+  const result2 = pairs.filter((pair: string) => {
+    const elfs = pair.split(',');
+    const elf1 = elfs[0].split('-');
+    const elf2 = elfs[1].split('-');
+
+    const elf1Min = parseInt(elf1[0], 10);
+    const elf1Max = parseInt(elf1[1], 10);
+    const elf2Min = parseInt(elf2[0], 10);
+    const elf2Max = parseInt(elf2[1], 10);
+    if (elf1Min < elf2Min && elf1Max < elf2Min) {
+      return false;
+    }
+    if (elf2Min < elf1Min && elf2Max < elf1Min) {
+      return false;
+    }
+    return true;
+  }).length;
+
+  return res.status(200).json({ result1, result2 });
 }
