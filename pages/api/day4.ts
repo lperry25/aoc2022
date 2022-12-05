@@ -5,17 +5,6 @@ type Data = {
   result2: number;
 };
 
-//Lowercase item types a through z have priorities 1 through 26.
-//Uppercase item types A through Z have priorities 27 through 52.
-function getItemValue(letter: string) {
-  if (letter === letter.toLowerCase()) {
-    // a starts at 97, so subtract 96 to make it 1
-    return letter.charCodeAt(0) - 96;
-  }
-  // char code for A is 65, but we want it to start at 27
-  return letter.charCodeAt(0) - 65 + 27;
-}
-
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const pairs = req.body.split('\n');
   const result1 = pairs.filter((pair: string) => {
