@@ -24,7 +24,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       stack++;
     }
   }
-  console.log(positionArray);
+
+  // copy the initial positions for result 2
+  const positionArrayCrateMover9001: string[][] = JSON.parse(JSON.stringify(positionArray));
   for (let i = 0; i < directions.length; i++) {
     const removeFromString = directions[i].split(' from ');
     const numOfItems = parseInt(removeFromString[0].substring(4), 10);
@@ -36,10 +38,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       positionArray[toStack - 1].unshift(crateToMove);
     }
   }
-  console.log(positionArray);
+  for (let i = 0; i < directions.length; i++) {
+    const removeFromString = directions[i].split(' from ');
+    const numOfItems = parseInt(removeFromString[0].substring(4), 10);
+    const removeToString = removeFromString[1].split(' to ');
+    const fromStack = parseInt(removeToString[0], 10);
+    const toStack = parseInt(removeToString[1], 10);
+    let cratesToMove = [];
+    for (let count = 0; count < numOfItems; count++) {
+      cratesToMove.push(positionArrayCrateMover9001[fromStack - 1].shift() as string);
+    }
+    positionArrayCrateMover9001[toStack - 1].unshift(...cratesToMove);
+  }
   const result1 = positionArray.reduce(
     (topValues, stack) => (stack[0] ? topValues + stack[0] : topValues),
     '',
   );
-  return res.status(200).json({ result1, result2: '' });
+  const result2 = positionArrayCrateMover9001.reduce(
+    (topValues, stack) => (stack[0] ? topValues + stack[0] : topValues),
+    '',
+  );
+  return res.status(200).json({ result1, result2 });
 }
