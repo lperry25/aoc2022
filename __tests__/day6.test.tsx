@@ -16,6 +16,7 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(7);
+    expect(result.result2).toBe(19);
   });
 
   it('passes the second test case', async () => {
@@ -23,6 +24,7 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(5);
+    expect(result.result2).toBe(23);
   });
 
   it('passes the third test case', async () => {
@@ -30,6 +32,7 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(6);
+    expect(result.result2).toBe(23);
   });
 
   it('passes the fourth test case', async () => {
@@ -37,6 +40,7 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(10);
+    expect(result.result2).toBe(29);
   });
 
   it('passes the fifth test case', async () => {
@@ -44,6 +48,7 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(11);
+    expect(result.result2).toBe(26);
   });
 
   it('passes with my input', async () => {
@@ -53,5 +58,6 @@ describe('Day6', () => {
     // @ts-ignore
     const result = JSON.parse(response._getData());
     expect(result.result1).toBe(1356);
+    expect(result.result2).toBe(2564);
   });
 });

@@ -5,35 +5,12 @@ type Data = {
   result2: number;
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const datastreamBuffer = req.body;
-
+function findPacket(packetLength: number, datastreamBuffer: string) {
+  let k = packetLength - 1;
   let currentBuffer = '';
-  const length = datastreamBuffer.length;
-  /*while (i < length) {
-    if (i < 3) {
-      currentBuffer = datastreamBuffer.substring(0, i);
-    } else {
-      currentBuffer = datastreamBuffer.substring(i - 3, i);
-    }
-    const checkCharacter = datastreamBuffer.charAt(i);
-
-    const matchingIndex = currentBuffer.split('').findIndex(char => char === checkCharacter);
-    console.log(currentBuffer, checkCharacter, i, matchingIndex);
-    if (matchingIndex > -1) {
-      i += matchingIndex + 1;
-    } else {
-      if (i > 3) {
-        console.log('break');
-        break;
-      }
-      i++;
-    }
-  }*/
-
-  let i = 3;
-  while (i < length) {
-    currentBuffer = datastreamBuffer.substring(i - 3, i + 1);
+  let inputLength = datastreamBuffer.length;
+  while (k < inputLength) {
+    currentBuffer = datastreamBuffer.substring(k - (packetLength - 1), k + 1);
     const noMatch = currentBuffer.split('').every(a => {
       const testString = currentBuffer;
       const find = testString.replaceAll(a, '');
@@ -45,8 +22,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     if (noMatch) {
       break;
     }
-    i++;
+    k++;
   }
+  return k + 1;
+}
 
-  return res.status(200).json({ result1: i + 1, result2: 0 });
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  const datastreamBuffer = req.body;
+
+  const result1 = findPacket(4, datastreamBuffer);
+  const result2 = findPacket(14, datastreamBuffer);
+
+  return res.status(200).json({ result1, result2 });
 }
