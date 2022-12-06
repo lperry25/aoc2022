@@ -8,14 +8,9 @@ type Data = {
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const datastreamBuffer = req.body;
 
-  // first check if the first three characters are unique
-
-  /*
-  I think this solution would have been more efficient but it didn't work
-  let i = 1;
   let currentBuffer = '';
   const length = datastreamBuffer.length;
-  while (i < length) {
+  /*while (i < length) {
     if (i < 3) {
       currentBuffer = datastreamBuffer.substring(0, i);
     } else {
@@ -37,7 +32,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }*/
 
   let i = 3;
-  let currentBuffer = '';
   while (i < length) {
     currentBuffer = datastreamBuffer.substring(i - 3, i + 1);
     const noMatch = currentBuffer.split('').every(a => {

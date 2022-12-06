@@ -52,6 +52,6 @@ describe('Day6', () => {
     );
     // @ts-ignore
     const result = JSON.parse(response._getData());
-    expect(result.result1).toBe(11);
+    expect(result.result1).toBe(1356);
   });
 });
