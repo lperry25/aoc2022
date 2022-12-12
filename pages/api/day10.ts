@@ -23,11 +23,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   let reportValues: number[] = [];
   let reportAt = [20, 60, 100, 140, 180, 220];
 
-  const reportCycle = instruction => {
+  const reportCycle = () => {
     const report = reportAt.find(report => report === cycle);
     if (report) {
-      console.log(instruction);
-      console.log('report', cycle, X, report * X);
       reportValues.push(report * X);
     }
   };
@@ -35,19 +33,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     const instruction = signals[i].split(' ');
     if (instruction[0] === 'noop') {
       cycle++;
-      reportCycle(instruction);
+      reportCycle();
     } else {
       cycle++;
-      reportCycle(instruction);
+      reportCycle();
       cycle++;
-      reportCycle(instruction);
+      reportCycle();
       X += parseInt(instruction[1], 10);
     }
-
-    //console.log(cycle, X);
   }
 
-  console.log(cycle, X, reportValues);
   const result1 = reportValues.reduce((a, b) => a + b, 0);
   const result2 = 0;
 
